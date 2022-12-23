@@ -27,7 +27,7 @@ def parser(content):
     seasons=[]
     for x in range(6):
         season = [
-            item.get_text(strip=True).split() for item in soup.select(selector)
+            item.get_text(strip=True).split() for item in soup.select(selector)]
         seasons.append(season)
     for y in range(6):
         player_seasons.append(seasons[0])
