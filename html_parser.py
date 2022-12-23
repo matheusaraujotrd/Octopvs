@@ -5,14 +5,14 @@ def parser(content):
 
     # Hockey stats, no need to understand those.
     name=[]
-    player_seasons=[]
-    seasons=[]
+    played_season=[]
     team=[]
     gp=[]
     g=[]
     a=[]
     p=[]
     pm=[]
+    pim=[]
     ppg=[]
     ppp=[]
     shg=[]
@@ -21,34 +21,37 @@ def parser(content):
     otg=[]
     s=[]
     sp=[]
+    fop=[]
     # Hockey stats, no need to understand those.
-    data_table = SoupStrainer("div", attrs={"class":"responsive-datatable__pinned"})
+    data_table = SoupStrainer("div", attrs={"id":"careerTable"})
     player_bio_label = SoupStrainer("span", attrs={"class":"player-bio__label"})
     soup = BeautifulSoup(content, "lxml", parse_only=player_bio_label)
     name=soup.find("span", attrs={"class":"player-bio__label"})
-    seasons=[]
+    name=name.get_text(strip=True)
     soup = BeautifulSoup(content, "lxml", parse_only=data_table)
-    for x in range(6):
-        season = [
-            item.get_text(strip=False).split() for item in soup.find_all("tr")
-                ]
-        seasons.append(season)
-    for y in range(6):
-        player_seasons.append(seasons[0])
-        team.append(seasons[1])
-        gp.append(seasons[2])
-        g.append(seasons[3])
-        a.append(seasons[4])
-        p.append(seasons[5])
-        pm.append(seasons[6])
-        ppg.append(seasons[7])
-        ppp.append(seasons[8])
-        shg.append(seasons[9])
-        shp.append(seasons[10])
-        gwg.append(seasons[11])
-        otg.append(seasons[12])
-        s.append(seasons[13])
-        sp.append(seasons[14])
-    player_data = (name, seasons, team, gp, g, a, p, pm, ppg, ppp, shg, shp, gwg, otg, s, sp)
+    seasons = [
+        item.get_text(strip=False).split() for item in soup.div.div.div.div.table.tbody.contents
+            ]
+    seasons_cleaned = [x for x in seasons if x]
+    for season in range(len(seasons_cleaned)):
+        current_season = seasons_cleaned[season]
+        played_season.append(current_season[0])
+        team.append(current_season[1])
+        gp.append(current_season[2])
+        g.append(current_season[3])
+        a.append(current_season[4])
+        p.append(current_season[5])
+        pm.append(current_season[6])
+        pim.append(current_season[7])
+        ppg.append(current_season[8])
+        ppp.append(current_season[9])
+        shg.append(current_season[10])
+        shp.append(current_season[11])
+        gwg.append(current_season[12])
+        otg.append(current_season[13])
+        s.append(current_season[14])
+        sp.append(current_season[15])
+        fop.append(current_season[16])
+    player_data = (name, played_season, team, gp, g, a, p, pim, pm, ppg, ppp, shg, shp, gwg, otg, s, sp, fop)
 
     return player_data
