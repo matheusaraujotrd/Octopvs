@@ -17,11 +17,14 @@ def running_scrapper(team="all"):
     driver = webdriver.Chrome(options=option, service=s)
     driver.get("https://www.nhl.com/redwings/roster")
     urls = len(driver.find_elements(By.CSS_SELECTOR, "div.name-col__list"))
-    for x in range(urls):
+    for url in range(urls):
         player=[]
         elements = driver.find_elements(By.CSS_SELECTOR, "div.name-col__list")
-        driver.execute_script("arguments[0].click();", elements[x])
+        driver.execute_script("arguments[0].click();", elements[url])
         player.append(html_parser.parser(driver.page_source))
         driver.back()
         player_data_df.append(exporter.write_player_data_to_df(player))
+        print(player_data_df)
+    for player_dataframe in player_data_df:
+        complete_dataframe = pd.merge(complete_dataframe, player_data_df[player_dataframe])
     
