@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
+from bs4 import SoupStrainer
 
 def parser(content):
-    soup = BeautifulSoup(content, "lxml")
-    
+
     # Hockey stats, no need to understand those.
     name=[]
     player_seasons=[]
@@ -22,12 +22,16 @@ def parser(content):
     s=[]
     sp=[]
     # Hockey stats, no need to understand those.
-
+    data_table = SoupStrainer("div", attrs={"class":"responsive-datatable__pinned"})
+    player_bio_label = SoupStrainer("span", attrs={"class":"player-bio__label"})
+    soup = BeautifulSoup(content, "lxml", parse_only=player_bio_label)
     name=soup.find("span", attrs={"class":"player-bio__label"})
     seasons=[]
+    soup = BeautifulSoup(content, "lxml", parse_only=data_table)
     for x in range(6):
         season = [
-            item.get_text(strip=True).split() for item in soup.select(selector)]
+            item.get_text(strip=False).split() for item in soup.find_all("tr")
+                ]
         seasons.append(season)
     for y in range(6):
         player_seasons.append(seasons[0])
