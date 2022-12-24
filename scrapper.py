@@ -18,7 +18,8 @@ def scrappy_execute():
     option.add_argument("headless")
     option.add_argument("--log-level=3")
     driver = webdriver.Chrome(options=option, service=s)
-    driver.get("https://www.nhl.com/redwings/roster")
+    #driver.get("https://www.nhl.com/redwings/roster")
+    driver.get("https://www.nhl.com/ducks/roster")
     urls = len(driver.find_elements(By.CSS_SELECTOR, "div.name-col__list"))
     for url in range(urls):
         player=[]

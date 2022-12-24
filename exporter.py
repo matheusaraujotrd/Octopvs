@@ -19,16 +19,15 @@ def export_data_to_csv(player_data):
     path = root + "/" + str(player_data.iloc[-1][3])
     filename = str(player_data.iloc[0][0]) + ".csv"
     for (roots, dirs, files) in os.walk(root):
-        for directory in dirs:
-            for names in files:
-                if filename in names:
-                    update_file(player_data, path, filename, root, directory)
+        for names in files:
+            if filename in names:
+                update_file(player_data, path, filename, root, roots)
     else:
         check_directory(path)
         player_data.to_csv(f"{path}" + "/" + f"{filename}", encoding="utf-8")
 
-def update_file(player_data, path, filename, root, dirpath):
-    os.remove(dirpath + "/" + filename)
+def update_file(player_data, path, filename, root, roots):
+    os.remove(roots + "/" + filename)
     actual_dir = str(player_data.iloc[-1][3])
     path = root + "/" + actual_dir
     check_directory(path)
