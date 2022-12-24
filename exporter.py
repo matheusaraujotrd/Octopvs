@@ -1,8 +1,14 @@
 import pandas as pd
 
 def write_player_data_to_df(player_data):
-    player_df = pd.DataFrame({"Name":player_data[0][0],"Season":player_data[0][1],"Team":player_data[0][2],"Games Played":player_data[0][3],"Goals":player_data[0][4],\
-    "Assists":player_data[0][5],"Points":player_data[0][6],"Plus / Minus":player_data[0][7],"Penalty Minutes":player_data[0][8],"Power Play Goals":player_data[0][9],\
-    "Power Play Points":player_data[0][10],"Shorthanded Goals":player_data[0][11],"Shorthanded Points":player_data[0][12],"Game Winning Goals":player_data[0][13],\
-    "Overtime Goals":player_data[0][14],"Shots":player_data[0][15],"Shooting Percentage":player_data[0][16],"Face-Off Win Percentage":player_data[0][17]})
+    if player_data[0][1] != "G":
+        player_df = pd.DataFrame({"Name":player_data[0][0],"Position":player_data[0][1],"Season":player_data[0][2],"Team":player_data[0][3],"Games Played":player_data[0][4],"Goals":player_data[0][5],\
+        "Assists":player_data[0][6],"Points":player_data[0][7],"Plus / Minus":player_data[0][8],"Penalty Minutes":player_data[0][9],"Power Play Goals":player_data[0][10],\
+        "Power Play Points":player_data[0][11],"Shorthanded Goals":player_data[0][12],"Shorthanded Points":player_data[0][13],"Game Winning Goals":player_data[0][14],\
+        "Overtime Goals":player_data[0][15],"Shots":player_data[0][16],"Shooting Percentage":player_data[0][17],"Face-Off Win Percentage":player_data[0][18]})
+    else:
+        player_df = pd.DataFrame({"Name":player_data[0][0],"Position":player_data[0][1],"Season":player_data[0][2],"Team":player_data[0][3],"Games Played":player_data[0][4],"Games Started":player_data[0][5],\
+        "Wins":player_data[0][6],"Losses":player_data[0][7],"Ties":player_data[0][8],"Overtime Losses":player_data[0][9],"Shots Against":player_data[0][10],\
+        "Goals Against":player_data[0][11],"Goals Against Average":player_data[0][12],"Saves":player_data[0][13],"Save Percentage":player_data[0][14],\
+        "Shutouts":player_data[0][15],"Minutes":player_data[0][16]})
     return player_df
