@@ -9,7 +9,10 @@ import exporter
 urls_teams_enum={}
 player_data_df=[]
 
-def running_scrapper(team="all"):
+def scrappy_mind(team="all"):
+    pass
+
+def scrappy_execute():
     s = Service("/usr/lib/chromium-browser/chromedriver")
     option = webdriver.ChromeOptions()
     option.add_argument("headless")
@@ -21,8 +24,8 @@ def running_scrapper(team="all"):
         player=[]
         elements = driver.find_elements(By.CSS_SELECTOR, "div.name-col__list")
         driver.execute_script("arguments[0].click();", elements[url])
-        player.append(html_parser.parser(driver.page_source))
+        player.append(html_parser.player_parser(driver.page_source))
+        print(f"Getting data from {player[0][0]} ({player[0][3][-1]})")
         driver.back()
         player_data_df.append(exporter.write_player_data_to_df(player))
-        print(player_data_df[url])
     
