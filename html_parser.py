@@ -43,10 +43,10 @@ def player_parser(content):
     name=player_bio_label.get_text(strip=True)
     position=soup.find("span", attrs={"class":"player-jumbotron-vitals--attr"})
     position=position.get_text(strip=True)
-    data_table = SoupStrainer("div", attrs={"id":"careerTable"})
-    soup = BeautifulSoup(content, "lxml", parse_only=data_table)
+    data_table = soup.find("div", attrs={"id":"careerTable"})
+    tbody = data_table.div.div.div.div.table.tbody
     seasons = [
-        item.get_text(strip=False).split() for item in soup.div.div.div.div.table.tbody.contents
+        item.get_text(strip=False).split() for item in tbody.find_all("tr")
             ]
     seasons_stripped = [x for x in seasons if x]
     if position != "G":

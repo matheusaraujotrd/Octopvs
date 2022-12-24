@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 def write_player_data_to_df(player_data):
     if player_data[0][1] != "G":
@@ -12,3 +13,36 @@ def write_player_data_to_df(player_data):
         "Goals Against":player_data[0][11],"Goals Against Average":player_data[0][12],"Saves":player_data[0][13],"Save Percentage":player_data[0][14],\
         "Shutouts":player_data[0][15],"Minutes":player_data[0][16]})
     return player_df
+
+def export_data_to_csv(player_data):
+    root = "data"
+    path = root + "/" + str(player_data.iloc[-1][3])
+    filename = str(player_data.iloc[0][0]) + ".csv"
+    for (roots, dirs, files) in os.walk(root):
+        for directory in dirs:
+            for names in files:
+                if filename in names:
+                    update_file(player_data, path, filename, root, directory)
+    else:
+        check_directory(path)
+        player_data.to_csv(f"{path}" + "/" + f"{filename}", encoding="utf-8")
+
+def update_file(player_data, path, filename, root, dirpath):
+    os.remove(dirpath + "/" + filename)
+    actual_dir = str(player_data.iloc[-1][3])
+    path = root + "/" + actual_dir
+    check_directory(path)
+    player_data.to_csv(f"{path}" + "/" + f"{filename}", encoding="utf-8")
+
+    
+
+def check_directory(path):
+    if os.path.exists(path):
+        pass
+    else:
+        os.makedirs(path)
+        
+
+
+    
+        

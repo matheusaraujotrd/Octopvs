@@ -24,8 +24,10 @@ def scrappy_execute():
         player=[]
         elements = driver.find_elements(By.CSS_SELECTOR, "div.name-col__list")
         driver.execute_script("arguments[0].click();", elements[url])
+        driver.implicitly_wait(2)
         player.append(html_parser.player_parser(driver.page_source))
         print(f"Getting data from {player[0][0]} ({player[0][3][-1]})")
         driver.back()
         player_data_df.append(exporter.write_player_data_to_df(player))
+        exporter.export_data_to_csv(player_data_df[url])
     
