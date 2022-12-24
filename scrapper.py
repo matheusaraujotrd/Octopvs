@@ -24,7 +24,5 @@ def running_scrapper(team="all"):
         player.append(html_parser.parser(driver.page_source))
         driver.back()
         player_data_df.append(exporter.write_player_data_to_df(player))
-        print(player_data_df)
-    for player_dataframe in player_data_df:
-        complete_dataframe = pd.merge(complete_dataframe, player_data_df[player_dataframe])
+        print(player_data_df[url])
     
