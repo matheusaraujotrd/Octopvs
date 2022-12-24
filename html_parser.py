@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from bs4 import SoupStrainer
 
-def parser(content):
+def player_parser(content):
     # Hockey stats, no need to understand those.
     name=[]
     position=[]
