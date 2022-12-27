@@ -33,8 +33,6 @@ def update_file(player_data, path, filename, root, roots):
     check_directory(path)
     player_data.to_csv(f"{path}" + "/" + f"{filename}", encoding="utf-8")
 
-    
-
 def check_directory(path):
     if os.path.exists(path):
         pass
